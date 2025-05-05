@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\MhsApiController;
+use App\Http\Controllers\MateriControler;
+use App\Http\Controllers\prodiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/profile', function () {
@@ -22,3 +25,11 @@ Route::get("/total/{angka1}/{angka2}/{angka3?}", function($angka1, $angka2, $ang
         'angka3' => $angka3
     ]);
 });
+
+Route::get('/materi/index',[MateriControler::class,'index']);
+
+Route::get('/materi/detail/{id}',[MateriControler::class,'detail']);
+
+Route::resource(name:'prodi',controller:prodiController::class);
+
+Route::apiResource('api/mhs',MhsApiController::class);

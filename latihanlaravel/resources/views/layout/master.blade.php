@@ -7,9 +7,12 @@
     <title>@yield('title')</title>
 </head>
 <body>
-    
-    @include ("layout.header");
+    <h1>{{ $kampus }}</h1>
+    <hr>
+
     @yield('content');
     
+    <hr>
+    &copy;{{ date('Y') }}Universitas Multi Data Palembang
 </body>
 </html>

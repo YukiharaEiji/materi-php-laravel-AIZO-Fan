@@ -4,22 +4,74 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class prodiController extends Controller
+class ProdiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return view(view:"prodi.index");
-    }
 
+        protected $prodi = [
+        [
+            'id' => 1,
+            'nama' => 'Teknik Informatika',
+            'kaprodi' => 'Dr. M. Rizky Pribadi, M.Kom',
+            'fakultas' => 'Ilmu Komputer & Rekayasa',
+            'akreditasi' => 'B'
+        ],
+        [
+            'id' => 2,
+            'nama' => 'Sistem Informasi',
+            'kaprodi' => 'Ahmad Farisi, M.Kom',
+            'fakultas' => 'Ilmu Komputer & Rekayasa',
+            'akreditasi' => 'B'
+        ],
+        [
+            'id' => 3,
+            'nama' => 'Teknik Elektro',
+            'kaprodi' => 'Eka Puji Widiyanto, S.T., M.Kom',
+            'fakultas' => 'Ilmu Komputer & Rekayasa',
+            'akreditasi' => 'C'
+        ],
+        [
+            'id' => 4,
+            'nama' => 'Menejemen Informatika',
+            'kaprodi' => 'Dicky Pratama, S.Kom., M.T.I',
+            'fakultas' => 'Ilmu Komputer & Rekayasa',
+            'akreditasi' => 'B'
+        ],
+        [
+            'id' => 5,
+            'nama' => 'Akuntansi',
+            'kaprodi' => 'Dr. Siti Khairani, S.E.Ak., M.SiI',
+            'fakultas' => 'Ekonomi & Bisnis',
+            'akreditasi' => 'B'
+        ],
+        [
+            'id' => 6,
+            'nama' => 'Menejemen',
+            'kaprodi' => 'Idham Cholid, S.E., M.E',
+            'fakultas' => 'Ekonomi & Bisnis',
+            'akreditasi' => 'B'
+        ],
+    ];
+
+        public function index()
+    {
+        $prodi = $this->prodi;
+        return view('prodi.index', compact('prodi'));
+    }
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+
+  public function createForm(Request $request)
+{
+  return view('prodi.create');
+}
+    
+    public function create(Request $request)
     {
-        echo "Ini halaman create prodi";
+        return redirect()->route('prodi.index');
     }
 
     /**
@@ -33,9 +85,23 @@ class prodiController extends Controller
     /**
      * Display the specified resource.
      */
+    public function detail($id)
+{
+    // Cari data prodi berdasarkan ID
+    $prodi = collect($this->prodi)->firstWhere('id', (int) $id);
+
+    // Kalau tidak ketemu ➔ 404
+    if (!$prodi) {
+        abort(404, 'Prodi tidak ditemukan');
+    }
+
+    return view('prodi.detail', compact('prodi'));
+}
+
+
     public function show(string $id)
     {
-        echo "ini detail prodi dengan id ",$id;
+
     }
 
     /**
@@ -43,7 +109,7 @@ class prodiController extends Controller
      */
     public function edit(string $id)
     {
-        echo "ini form edit prodi dengan id ",$id;
+       
     }
 
     /**
@@ -59,6 +125,7 @@ class prodiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+ return redirect()->route('prodi.index')->with('success', 'Prodi berhasil dihapus');    
     }
-}
+    }
+

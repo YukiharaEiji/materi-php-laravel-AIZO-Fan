@@ -39,9 +39,7 @@ class FakultasController extends Controller
             'id' => 2, 
             'nama' => 'Fakultas Ekonomi & Bisnis', 
             'gambar' => 'mdpkampus.jpg',
-            'deskripsi' => 'Fakultas Ekonomi & Bisnis (FEB) adalah lembaga akademik yang berfokus pada pengembangan keilmuan di bidang ekonomi, manajemen, dan bisnis modern. FEB bertujuan mencetak profesional yang unggul, etis, dan mampu bersaing di pasar global melalui pendekatan pembelajaran yang integratif antara teori dan praktik bisnis.
-
-'
+            'deskripsi' => 'Fakultas Ekonomi & Bisnis (FEB) adalah lembaga akademik yang berfokus pada pengembangan keilmuan di bidang ekonomi, manajemen, dan bisnis modern. FEB bertujuan mencetak profesional yang unggul, etis, dan mampu bersaing di pasar global melalui pendekatan pembelajaran yang integratif antara teori dan praktik bisnis.'
         ]
     ];
 

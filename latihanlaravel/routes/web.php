@@ -68,10 +68,15 @@ Route::get('/', function () {
 // ---------------------------------- BATAS SUCI --------------------------------------
 
 // Prodi Routes
+
 Route::get('/prodi', [ProdiController::class, 'index'])->name('prodi.index');
-Route::get('/prodi/{id}/detail', [ProdiController::class, 'detail'])->name('prodi.detail');
-Route::get('/prodi/create', [ProdiController::class, 'createForm'])->name('prodi.create');
-Route::post('/prodi/{id}/destroy', [ProdiController::class, 'destroy'])->name('prodi.destroy');
+Route::get('/prodi/create', [ProdiController::class, 'create'])->name('prodi.create');
+Route::post('/prodi', [ProdiController::class, 'store'])->name('prodi.store');
+Route::get('/prodi/{id}', [ProdiController::class, 'show'])->name('prodi.show');
+Route::get('/prodi/{id}/edit', [ProdiController::class, 'edit'])->name('prodi.edit');
+Route::put('/prodi/{id}', [ProdiController::class, 'update'])->name('prodi.update');
+Route::delete('/prodi/{id}/destroy', [ProdiController::class, 'destroy'])->name('prodi.destroy');
+
 
 // Materi Routes
 Route::get('/materi', [MateriController::class, 'index'])->name('materi.index');
@@ -87,10 +92,12 @@ Route::post('/dosen/{id}/destroy', [DosenController::class, 'destroy'])->name('d
 
 // Fakultas Routes
 Route::get('/fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
+Route::get('/fakultas/create', [FakultasController::class, 'create'])->name('fakultas.create');
+Route::post('/fakultas', [FakultasController::class, 'store'])->name('fakultas.store');
+Route::get('/fakultas/{id}/edit', [FakultasController::class, 'edit'])->name('fakultas.edit');
+Route::put('/fakultas/{id}', [FakultasController::class, 'update'])->name('fakultas.update');
+Route::delete('/fakultas/{id}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
 Route::get('/fakultas/{id}/detail', [FakultasController::class, 'detail'])->name('fakultas.detail');
-Route::get('/fakultas/create', [FakultasController::class, 'createForm'])->name('fakultas.create');
-Route::post('/fakultas/{id}/destroy', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
-
 // Mahasiswa Routes
 Route::get('/mhs', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 Route::get('/mhs/{id}/detail', [MahasiswaController::class, 'detail'])->name('mahasiswa.detail');

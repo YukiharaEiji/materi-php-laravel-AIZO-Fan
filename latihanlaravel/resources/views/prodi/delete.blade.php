@@ -10,7 +10,7 @@
 
         <form action="{{ route('prodi.destroy', $prodi['id']) }}" method="POST" style="display: inline;">
             @csrf
-            @method('POST') 
+            @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus program studi ini?')">Hapus</button>
         </form>
 

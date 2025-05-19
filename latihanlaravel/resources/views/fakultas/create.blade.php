@@ -7,23 +7,25 @@
     <div class="container">
         <h1 class="mb-4 mt-3 text-danger">Tambah Fakultas Baru</h1>
 
-        <form action="{{ url('/fakultas') }}">
+        <form action="{{ route('fakultas.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Fakultas</label>
-                <input type="text" class="form-control" id="nama" placeholder="Masukkan nama fakultas">
+                <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan nama fakultas" required>
             </div>
 
             <div class="mb-3">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" id="deskripsi" rows="4" placeholder="Masukkan deskripsi fakultas"></textarea>
+                <textarea name="deskripsi" class="form-control" id="deskripsi" rows="4" placeholder="Masukkan deskripsi fakultas"></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="program" class="form-label">Program Studi</label>
-                <input type="text" class="form-control" id="program" placeholder="Contoh: Teknik Informatika (S1)">
+                <label for="gambar" class="form-label">Gambar Fakultas</label>
+                <input type="file" name="gambar" class="form-control" id="gambar">
             </div>
 
-             <a href="{{ route('fakultas.index') }}" class="btn btn-primary mt-2">Simpan</a>
+            <button type="submit" class="btn btn-primary mt-2">Simpan</button>
             <a href="{{ route('fakultas.index') }}" class="btn btn-secondary mt-2">Batal</a>
         </form>
     </div>

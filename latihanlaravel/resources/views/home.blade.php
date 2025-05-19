@@ -207,7 +207,7 @@
             <li>Membangun jejaring dan kerjasama untuk pengembangan dan penerapan tri darma perguruan tinggi.</li>
         </ol>
     </div>
-    <section class="py-5">
+    <section class="py-5"> 
       <div class="container fade-in" id="alumni">
         <h2 class="text-center mb-4 text-danger">Testimoni Alumni</h2>
         <div class="row">

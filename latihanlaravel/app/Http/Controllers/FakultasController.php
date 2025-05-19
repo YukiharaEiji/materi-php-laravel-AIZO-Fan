@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class FakultasController extends Controller
@@ -10,39 +12,9 @@ class FakultasController extends Controller
      * Display a listing of the resource.
      */
 
-     protected $fakultas = [
-        [
-            'id' => 1,
-            'nama' => 'Fakultas Ilmu Komputer & Rekayasa',
-            'gambar' => 'mdpsuperstore.jpg',
-            'deskripsi' => 'FIKR terus mendorong riset di bidang kecerdasan buatan, sistem terdistribusi, rekayasa perangkat lunak, serta keamanan siber, guna memberikan kontribusi nyata bagi kemajuan ilmu pengetahuan dan teknologi di tingkat nasional maupun internasional.'
-        ],
-        [
-            'id' => 2,
-            'nama' => 'Fakultas Ekonomi & Bisnis',
-            'gambar' => 'mdpkampus.jpg',
-            'deskripsi' => 'Dengan didukung oleh dosen profesional dan praktisi industri, FEB aktif menjalin kerja sama dengan perusahaan, lembaga keuangan, serta institusi internasional. Mahasiswa FEB dibekali kemampuan analisis, kepemimpinan, dan kewirausahaan yang relevan dengan kebutuhan dunia usaha saat ini.'
-        ],
-    ];
-    
-
     public function index()
 {
-    $fakultas = [
-        [
-            'id' => 1, 
-            'nama' => 'Fakultas Ilmu Komputer & Rekayasa', 
-            'gambar' => 'mdpsuperstore.jpg',
-            'deskripsi' => 'Fakultas Ilmu Komputer & Rekayasa (FIKR) merupakan pusat pengembangan pendidikan dan riset di bidang teknologi informasi dan rekayasa sistem. FIKR berkomitmen untuk menghasilkan lulusan yang kompeten, inovatif, dan adaptif terhadap perkembangan teknologi digital. Fakultas ini menyediakan kurikulum yang berbasis kebutuhan industri, serta dilengkapi dengan fasilitas laboratorium modern dan program magang industri untuk mendukung pembelajaran praktis.'
-        ],
-        [
-            'id' => 2, 
-            'nama' => 'Fakultas Ekonomi & Bisnis', 
-            'gambar' => 'mdpkampus.jpg',
-            'deskripsi' => 'Fakultas Ekonomi & Bisnis (FEB) adalah lembaga akademik yang berfokus pada pengembangan keilmuan di bidang ekonomi, manajemen, dan bisnis modern. FEB bertujuan mencetak profesional yang unggul, etis, dan mampu bersaing di pasar global melalui pendekatan pembelajaran yang integratif antara teori dan praktik bisnis.'
-        ]
-    ];
-
+     $fakultas = Fakultas::all();
     return view('fakultas.index', compact('fakultas'));
 }
 
@@ -50,14 +22,9 @@ class FakultasController extends Controller
      * Show the form for creating a new resource.
      */
 
-     public function createForm()
-     {
-         return view('fakultas.create');
-     }
-
     public function create(Request $request)
     {
-        return redirect()->route('fakultas.index');
+        return view('fakultas.create');
     }
 
     /**
@@ -65,27 +32,32 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|image|max:2048',
+        ]);
+
+        $gambarPath = null;
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('gambar_fakultas', 'public');
+        }
+
+        Fakultas::create([
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'gambar' => $gambarPath,
+        ]);
+
+        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil ditambahkan.');
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function detail($id)
     {
-        $fakultas = null;
-        foreach ($this->fakultas as $fakultasItem) {
-            if ($fakultasItem['id'] == $id) {
-                $fakultas = $fakultasItem;
-                break;
-            }
-        }
-    
-        if (!$fakultas) {
-            return redirect()->route('fakultas.index')->with('error', 'Fakultas tidak ditemukan');
-        }
-    
-        return view('fakultas.detail', ['fakultas' => $fakultas]);
     }
 
 
@@ -94,7 +66,8 @@ class FakultasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+          $fakultas = Fakultas::findOrFail($id);
+    return view('fakultas.edit', compact('fakultas'));
     }
 
     /**
@@ -102,15 +75,46 @@ class FakultasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|image|max:2048',
+        ]);
+
+        $fakultas = Fakultas::findOrFail($id);
+
+        if ($request->hasFile('gambar')) {
+            if ($fakultas->gambar && Storage::exists('public/' . $fakultas->gambar)) {
+                Storage::delete('public/' . $fakultas->gambar);
+            }
+
+            $gambarPath = $request->file('gambar')->store('gambar_fakultas', 'public');
+            $fakultas->gambar = $gambarPath;
+        }
+
+        $fakultas->update([
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'gambar' => $fakultas->gambar,
+        ]);
+
+        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-       return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil dihapus');
+     {
+        $fakultas = Fakultas::findOrFail($id);
+
+        if ($fakultas->gambar && Storage::exists('public/' . $fakultas->gambar)) {
+            Storage::delete('public/' . $fakultas->gambar);
+        }
+
+        $fakultas->delete();
+
+        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil dihapus.');
     }
 }
 

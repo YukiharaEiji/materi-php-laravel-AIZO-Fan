@@ -18,14 +18,14 @@
             </div>
             <div class="mb-3">
                 <label for="kaprodi" class="form-label">Nama Ka Prodi</label>
-                <input type="text" name="kaprodi" class="form-control" id="kaprodi" value="{{ old('kaprodi') }}">
+                <input type="text" name="kaprodi" class="form-control" id="kaprodi" value="{{ old('kaprodi') }}" required>
                 @error('kaprodi')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="akreditasi" class="form-label">Akreditasi</label>
-                <input type="text" name="akreditasi" class="form-control" id="akreditasi" value="{{ old('akreditasi') }}">
+                <input type="text" name="akreditasi" class="form-control" id="akreditasi" value="{{ old('akreditasi') }}" required>
                 @error('akreditasi')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror

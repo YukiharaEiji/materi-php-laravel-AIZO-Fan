@@ -28,7 +28,7 @@
                             <p><strong>Fakultas :</strong> {{ $p->fakultas }}</p>
 
                             <a href="{{ route('prodi.edit', $p->id) }}" class="btn btn-info btn-sm">Edit</a>
-
+                            {{-- <a href="{{ route('prodi.show', $p->id) }}" class="btn btn-info btn-sm">detail</a> --}}
                             <form action="{{ route('prodi.destroy', $p->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Prodi ?')">
                                 @csrf
                                 @method('DELETE')

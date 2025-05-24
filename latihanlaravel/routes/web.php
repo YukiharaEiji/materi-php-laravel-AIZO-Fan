@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\MhsApiController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\MahasiswaController;
@@ -68,7 +69,6 @@ Route::get('/', function () {
 // ---------------------------------- BATAS SUCI --------------------------------------
 
 // Prodi Routes
-
 Route::get('/prodi', [ProdiController::class, 'index'])->name('prodi.index');
 Route::get('/prodi/create', [ProdiController::class, 'create'])->name('prodi.create');
 Route::post('/prodi', [ProdiController::class, 'store'])->name('prodi.store');
@@ -86,9 +86,13 @@ Route::post('/materi/{id}/destroy', [MateriController::class, 'destroy'])->name(
 
 // Dosen Routes
 Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.index');
-Route::get('/dosen/{id}/detail', action: [DosenController::class, 'detail'])->name('dosen.detail');
-Route::get('/dosen/create', [DosenController::class, 'createForm'])->name('dosen.create');
-Route::post('/dosen/{id}/destroy', [DosenController::class, 'destroy'])->name('dosen.destroy');
+Route::get('/dosen/create', [DosenController::class, 'create'])->name('dosen.create');
+Route::post('/dosen', [DosenController::class, 'store'])->name('dosen.store');
+Route::get('/dosen/{id}', [DosenController::class, 'show'])->name('dosen.show');
+Route::get('/dosen/{id}/edit', [DosenController::class, 'edit'])->name('dosen.edit');
+Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
+
+Route::delete('/dosen/{id}/destroy', [DosenController::class, 'destroy'])->name('dosen.destroy');
 
 // Fakultas Routes
 Route::get('/fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
@@ -104,6 +108,12 @@ Route::get('/mhs/{id}/detail', [MahasiswaController::class, 'detail'])->name('ma
 Route::get('/mhs/create', [MahasiswaController::class, 'createForm'])->name('mahasiswa.create');
 Route::post('/mhs/{id}/destroy', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 
+// Authentication
+Route::get('/login', [AuthController::class, 'showLogin']);
+Route::post('/login', [AuthController::class, 'do_login']);
+
+Route::get('/register', [AuthController::class, 'showRegister']);
+Route::post('/register', [AuthController::class, 'do_register']);
 Route::get('/', function () {
     return view('home');
 })->name('layout.home');

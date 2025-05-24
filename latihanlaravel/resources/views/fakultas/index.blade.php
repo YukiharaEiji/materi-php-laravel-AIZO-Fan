@@ -26,10 +26,10 @@
                 <h2 class="text-danger">{{ $fak->nama }}</h2>
                 <p>{{ $fak->deskripsi }}</p>
                 
-                <!-- Tombol Edit -->
+                
                 <a href="{{ route('fakultas.edit', $fak->id) }}" class="btn btn-primary">Edit</a>
 
-                <!-- Tombol Hapus -->
+       
                 <form action="{{ route('fakultas.destroy', $fak->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')

@@ -33,7 +33,7 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama' => 'required|string|max:50',
             'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|max:2048',
         ]);
@@ -60,7 +60,9 @@ class FakultasController extends Controller
     {
     }
 
-
+    public function show(string $id)
+    {
+    }
     /**
      * Show the form for editing the specified resource.
      */

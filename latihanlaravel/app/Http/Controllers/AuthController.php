@@ -17,22 +17,38 @@ class AuthController extends Controller
     }
 
     // Proses login
-    public function do_login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+  public function do_login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        if (auth()->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/'); 
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+
+      
+        if ($user->level == 'admin') {
+            return redirect()->route('home'); 
+        } elseif ($user->level == 'dosen') {
+            return redirect()->route('materi.index'); 
+        } elseif ($user->level == 'mahasiswa') {
+            return redirect()->route('materi.index'); 
+        } elseif ($user->level == 'user') {
+            return redirect()->route('user.profile'); 
+        } else {
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['email' => 'Level user tidak valid']);
         }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah',
-        ])->withInput();
     }
+
+    return back()->withErrors([
+        'email' => 'Email atau password salah',
+    ])->withInput();
+}
+
 
     // Tampilkan form register
     public function showRegister()
@@ -42,33 +58,31 @@ class AuthController extends Controller
 
     // Proses register
     public function do_register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:8',
+        'level' => 'required|in:user,mahasiswa,dosen,admin',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect("register")
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-
-        // Pastikan kolom level ada di migration, atau hapus baris ini
-        $user->level = 'user';
-
-        $user->save();
-
-        return redirect('login')->with('success', 'Registrasi berhasil, silakan login.');
+    if ($validator->fails()) {
+        return redirect("register")
+            ->withErrors($validator)
+            ->withInput();
     }
 
-    // Proses logout (tambahkan jika diperlukan)
+    $user = new User();
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->password = Hash::make($request->password);
+    $user->level = $request->level; 
+
+    $user->save();
+
+    return redirect('login')->with('success', 'Registrasi berhasil, silakan login.');
+}
+
     public function logout(Request $request)
     {
         Auth::logout();

@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Register</title>
-    <!-- Bootstrap 5 CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akun</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-4 text-center">Register</h3>
+<body class="bg-light d-flex align-items-center" style="height: 100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="mb-4 text-center text-primary">Buat Akun Baru</h3>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                        
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <strong>kesalahan:</strong>
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" name="name" id="name"
+                                    placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required>
+                            </div>
+
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Alamat Email</label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="masukan Gmail" value="{{ old('email') }}" required>
+                            </div>
+
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Kata Sandi</label>
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="Minimal 8 karakter" required>
+                            </div>
+
+                            
+                            <div class="mb-3">
+                                <label for="level" class="form-label">Level</label>
+                                <select name="level" id="level" class="form-control" required>
+                                    <option value="">-- Pilih Level --</option>
+                                    <option value="user" {{ old('level') == 'user' ? 'selected' : '' }}>User</option>
+                                    <option value="mahasiswa" {{ old('level') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                                    <option value="dosen" {{ old('level') == 'dosen' ? 'selected' : '' }}>Dosen</option>
+                                    <option value="admin" {{ old('level') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                </select>
+                            </div>
+
+                        
+                            <button type="submit" class="btn btn-primary w-100">Daftar Sekarang</button>
+                        </form>
+
+                        
+                        <p class="text-center mt-3 mb-0">
+                            Sudah punya akun?
+                            <a href="{{ route('login') }}" class="text-decoration-none">Masuk di sini</a>
+                        </p>
                     </div>
-                @endif
-
-                <form method="POST" action="/register" novalidate>
-                    @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            class="form-control"
-                            placeholder="Masukkan nama lengkap"
-                            value="{{ old('name') }}"
-                            required
-                        />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Masukkan email"
-                            value="{{ old('email') }}"
-                            required
-                        />
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Masukkan password"
-                            required
-                        />
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                </form>
-
-                <p class="mt-3 text-center">
-                    Sudah punya akun?
-                    <a href="/login" class="text-decoration-none">Login di sini</a>
-                </p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle (Popper + JS) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

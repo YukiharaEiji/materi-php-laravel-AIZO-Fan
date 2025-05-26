@@ -7,15 +7,16 @@ use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\prodiController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/profile', function () {
 //     return view('Profile');
 // });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 // Route::get("/berita/{id}/{title?}", function($id, $title = NULL) {
 //     return view("Berita", ['id' => $id, 'title' => $title]);
@@ -80,9 +81,12 @@ Route::delete('/prodi/{id}/destroy', [ProdiController::class, 'destroy'])->name(
 
 // Materi Routes
 Route::get('/materi', [MateriController::class, 'index'])->name('materi.index');
-Route::get('/materi/{id}/detail', [MateriController::class, 'detail'])->name('materi.detail');
-Route::get('/materi/create', [MateriController::class, 'createForm'])->name('materi.create');
-Route::post('/materi/{id}/destroy', [MateriController::class, 'destroy'])->name('materi.destroy');
+Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
+Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
+Route::get('/materi/{id}', [MateriController::class, 'show'])->name('materi.show');
+Route::get('/materi/{id}/edit', [MateriController::class, 'edit'])->name('materi.edit');
+Route::put('/materi/{id}', [MateriController::class, 'update'])->name('materi.update');
+Route::delete('/materi/{id}/destroy', [MateriController::class, 'destroy'])->name('materi.destroy');
 
 // Dosen Routes
 Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.index');
@@ -91,7 +95,6 @@ Route::post('/dosen', [DosenController::class, 'store'])->name('dosen.store');
 Route::get('/dosen/{id}', [DosenController::class, 'show'])->name('dosen.show');
 Route::get('/dosen/{id}/edit', [DosenController::class, 'edit'])->name('dosen.edit');
 Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
-
 Route::delete('/dosen/{id}/destroy', [DosenController::class, 'destroy'])->name('dosen.destroy');
 
 // Fakultas Routes
@@ -102,18 +105,65 @@ Route::get('/fakultas/{id}/edit', [FakultasController::class, 'edit'])->name('fa
 Route::put('/fakultas/{id}', [FakultasController::class, 'update'])->name('fakultas.update');
 Route::delete('/fakultas/{id}', [FakultasController::class, 'destroy'])->name('fakultas.destroy');
 Route::get('/fakultas/{id}/detail', [FakultasController::class, 'detail'])->name('fakultas.detail');
+
 // Mahasiswa Routes
-Route::get('/mhs', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
-Route::get('/mhs/{id}/detail', [MahasiswaController::class, 'detail'])->name('mahasiswa.detail');
-Route::get('/mhs/create', [MahasiswaController::class, 'createForm'])->name('mahasiswa.create');
-Route::post('/mhs/{id}/destroy', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
+Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
+Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
+Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+Route::delete('/mahasiswa/{id}/destroy', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 
-// Authentication
-Route::get('/login', [AuthController::class, 'showLogin']);
-Route::post('/login', [AuthController::class, 'do_login']);
-
-Route::get('/register', [AuthController::class, 'showRegister']);
-Route::post('/register', [AuthController::class, 'do_register']);
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('home');
-})->name('layout.home');
+})->name('home');
+
+
+// // Halaman utama
+// Route::get('/', fn () => view('home'));
+
+// // Autentikasi
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/', [AuthController::class, 'do_login'])->name('login.process');
+
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
+Route::post('/register', [AuthController::class, 'do_register'])->name('register');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+
+// Route::apiResource('api/mhs', MhsApiController::class);
+
+
+// Route::middleware(['auth', 'ceklog:admin'])->group(function () {
+//     Route::resource('prodi', ProdiController::class);
+//     Route::resource('dosen', DosenController::class);
+//     Route::resource('materi', MateriController::class);
+//     Route::resource('fakultas', FakultasController::class);
+//     Route::resource('mahasiswa', MahasiswaController::class);
+
+//     Route::get('/home', fn () => view('home'))->name('home.admin');
+// });
+
+// Route::middleware(['auth', 'ceklog:dosen'])->group(function () {
+//     Route::resource('materi', MateriController::class);
+//     Route::resource('mahasiswa', MahasiswaController::class);
+
+//     Route::get('/home', fn () => view('home'))->name('home.dosen');
+// });
+
+// // Mahasiswa
+// Route::middleware(['auth', 'ceklog:mahasiswa'])->group(function () {
+//     Route::resource('materi', MateriController::class);
+
+//     Route::get('/home', fn () => view('home'))->name('home.mahasiswa');
+// });
+
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/home', fn () => view('home'))->name('home');
+// });
+

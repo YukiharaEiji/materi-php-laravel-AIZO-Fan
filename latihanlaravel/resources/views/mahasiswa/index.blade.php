@@ -14,21 +14,21 @@
         @endif
         
         <div class="row">
-            @foreach ($mahasiswa as $mhs)
+            @foreach ($mahasiswas as $mhs)
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-header bg-danger text-white">
-                            {{ $mhs['nama'] }}
+                            {{ $mhs->nama }}
                         </div>
                         <div class="card-body">
-                            <p><strong>NPM:</strong> {{ $mhs['npm'] }}</p>
-                            <p><strong>Program Studi:</strong> {{ $mhs['prodi'] }}</p>
-                            <a href="{{ route('mahasiswa.detail', $mhs['id']) }}" class="btn btn-info btn-sm">Detail</a>
-                            
-                            <!-- Gimmick Hapus -->
-                            <form action="{{ route('mahasiswa.destroy', $mhs['id']) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Mahasiswa?')">
+                            <p><strong>NPM:</strong> {{ $mhs->npm }}</p>
+                            <p><strong>Program Studi:</strong> {{ $mhs->prodi }}</p>
+
+                            <a href="{{ route('mahasiswa.edit', $mhs->id) }}" class="btn btn-info btn-sm">Edit</a>
+
+                            <form action="{{ route('mahasiswa.destroy', $mhs->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Mahasiswa?')">
                                 @csrf
-                                @method('POST') <!-- Gunakan POST sebagai gimmick -->
+                                @method('DELETE') <!-- Sesuai route: DELETE -->
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                             </form>
                         </div>

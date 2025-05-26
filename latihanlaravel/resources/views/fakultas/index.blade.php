@@ -26,20 +26,24 @@
                 <h2 class="text-danger">{{ $fak->nama }}</h2>
                 <p>{{ $fak->deskripsi }}</p>
                 
-                
-                <a href="{{ route('fakultas.edit', $fak->id) }}" class="btn btn-primary">Edit</a>
+                {{-- Hanya tampilkan tombol Edit dan Hapus jika user admin --}}
+                @if(Auth::user()->level === 'admin')
+                    <a href="{{ route('fakultas.edit', $fak->id) }}" class="btn btn-primary">Edit</a>
 
-       
-                <form action="{{ route('fakultas.destroy', $fak->id) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus fakultas ini?')">Hapus</button>
-                </form>
+                    <form action="{{ route('fakultas.destroy', $fak->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus fakultas ini?')">Hapus</button>
+                    </form>
+                @endif
             </div>
         </div>
         @endforeach
 
-        <a href="{{ route('fakultas.create') }}" class="btn btn-success mb-5">Tambah Fakultas</a>
+        {{-- Tombol tambah fakultas hanya untuk admin --}}
+        @if(Auth::user()->level === 'admin')
+            <a href="{{ route('fakultas.create') }}" class="btn btn-success mb-5">Tambah Fakultas</a>
+        @endif
     </div>
 </main>
 @endsection

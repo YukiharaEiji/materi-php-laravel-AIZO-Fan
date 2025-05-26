@@ -24,20 +24,26 @@
                             <p><strong>NPM:</strong> {{ $mhs->npm }}</p>
                             <p><strong>Program Studi:</strong> {{ $mhs->prodi }}</p>
 
-                            <a href="{{ route('mahasiswa.edit', $mhs->id) }}" class="btn btn-info btn-sm">Edit</a>
+                            {{-- Edit & Hapus hanya untuk admin --}}
+                            @if(Auth::user()->level === 'admin')
+                                <a href="{{ route('admin.mahasiswa.edit', $mhs->id) }}" class="btn btn-info btn-sm">Edit</a>
 
-                            <form action="{{ route('mahasiswa.destroy', $mhs->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Mahasiswa?')">
-                                @csrf
-                                @method('DELETE') <!-- Sesuai route: DELETE -->
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
+                                <form action="{{ route('admin.mahasiswa.destroy', $mhs->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Mahasiswa?')">
+                                    @csrf
+                                    @method('DELETE') 
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
 
-        <a href="{{ route('mahasiswa.create') }}" class="btn btn-success mb-3">Tambah Mahasiswa Baru</a>  
+        {{-- Tombol tambah hanya untuk admin --}}
+        @if(Auth::user()->level === 'admin')
+            <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-success mb-3">Tambah Mahasiswa Baru</a>  
+        @endif
     </div>
 </main>
 @endsection

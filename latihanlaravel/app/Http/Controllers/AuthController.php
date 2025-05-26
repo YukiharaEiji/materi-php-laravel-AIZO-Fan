@@ -31,16 +31,16 @@ class AuthController extends Controller
 
       
         if ($user->level == 'admin') {
-            return redirect()->route('home'); 
+            return redirect()->route('admin.home'); 
         } elseif ($user->level == 'dosen') {
-            return redirect()->route('materi.index'); 
+            return redirect()->route('dosen.home'); 
         } elseif ($user->level == 'mahasiswa') {
-            return redirect()->route('materi.index'); 
+            return redirect()->route('mhs.home'); 
         } elseif ($user->level == 'user') {
-            return redirect()->route('user.profile'); 
+            return redirect()->route('user.home'); 
         } else {
             Auth::logout();
-            return redirect()->route('login')->withErrors(['email' => 'Level user tidak valid']);
+            return redirect()->route('/')->withErrors(['email' => 'Level user tidak valid']);
         }
     }
 

@@ -7,7 +7,11 @@
     <div class="container">
         <h1 class="mb-4 mt-3 text-danger">Edit Dosen</h1>
 
-        <form action="{{ route('dosen.update', $dosen->id) }}" method="POST" enctype="multipart/form-data">
+        @php
+            $prefix = explode('.', request()->route()->getName())[0];
+        @endphp
+
+        <form action="{{ route($prefix . '.dosen.update', $dosen->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -33,7 +37,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-2">Simpan Perubahan</button>
-            <a href="{{ route('dosen.index') }}" class="btn btn-secondary mt-2">Batal</a>
+            <a href="{{ route($prefix . '.dosen.index') }}" class="btn btn-secondary mt-2">Batal</a>
         </form>
     </div>
 </main>

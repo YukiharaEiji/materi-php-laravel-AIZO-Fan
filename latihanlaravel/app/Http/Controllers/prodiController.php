@@ -84,7 +84,7 @@ class ProdiController extends Controller
 
         Prodi::create($request->all());
 
-        return redirect()->route('prodi.index')->with('success', 'Program Studi berhasil ditambahkan.');
+        return redirect()->route('admin.prodi.index')->with('success', 'Program Studi berhasil ditambahkan.');
     }
 
     /**
@@ -124,7 +124,7 @@ class ProdiController extends Controller
         $prodi = Prodi::findOrFail($id);
         $prodi->update($request->all());
 
-        return redirect()->route('prodi.index')->with('success', 'Program Studi berhasil diperbarui.');
+        return redirect()->route('admin.prodi.index')->with('success', 'Program Studi berhasil diperbarui.');
     }
 
     /**
@@ -135,7 +135,7 @@ class ProdiController extends Controller
         $prodi = Prodi::findOrFail($id);
         $prodi->delete();
 
-        return redirect()->route('prodi.index')->with('success', 'Program Studi berhasil dihapus.');
+        return redirect()->route('admin.prodi.index')->with('success', 'Program Studi berhasil dihapus.');
     }
     }
 

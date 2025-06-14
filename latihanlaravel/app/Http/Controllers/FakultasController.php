@@ -49,7 +49,7 @@ class FakultasController extends Controller
             'gambar' => $gambarPath,
         ]);
 
-        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil ditambahkan.');
+        return redirect()->route('admin.fakultas.index')->with('success', 'Fakultas berhasil ditambahkan.');
     }
     
 
@@ -100,7 +100,7 @@ class FakultasController extends Controller
             'gambar' => $fakultas->gambar,
         ]);
 
-        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil diperbarui.');
+        return redirect()->route('admin.fakultas.index')->with('success', 'Fakultas berhasil diperbarui.');
     }
 
     /**
@@ -116,7 +116,7 @@ class FakultasController extends Controller
 
         $fakultas->delete();
 
-        return redirect()->route('fakultas.index')->with('success', 'Fakultas berhasil dihapus.');
+        return redirect()->route('admin.fakultas.index')->with('success', 'Fakultas berhasil dihapus.');
     }
 }
 

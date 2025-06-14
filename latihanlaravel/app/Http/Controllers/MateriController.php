@@ -38,7 +38,7 @@ class MateriController extends Controller
         ]);
 
         Materi::create($request->all());
-        return redirect()->route('materi.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('admin.materi.index')->with('success', 'Data berhasil ditambahkan.');
     }
     
 
@@ -85,7 +85,7 @@ class MateriController extends Controller
             'tanggal' => $request->tanggal,
         ]);
 
-        return redirect()->route('materi.index')->with('success', 'Materi berhasil diperbarui.');
+        return redirect()->route('admin.materi.index')->with('success', 'Materi berhasil diperbarui.');
     }
     /**
      * Remove the specified resource from storage.
@@ -95,6 +95,6 @@ class MateriController extends Controller
         $materi = Materi::findOrFail($id);
         $materi->delete();
 
-        return redirect()->route('materi.index')->with('success', 'Materi berhasil dihapus.');
+        return redirect()->route('admin.materi.index')->with('success', 'Materi berhasil dihapus.');
     }
 }

@@ -7,7 +7,7 @@
     <div class="container">
         <h1 class="mb-4 mt-3 text-danger">Edit Fakultas</h1>
 
-        <form action="{{ route('fakultas.update', $fakultas->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.fakultas.update', $fakultas->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -33,7 +33,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-2">Simpan Perubahan</button>
-            <a href="{{ route('fakultas.index') }}" class="btn btn-secondary mt-2">Batal</a>
+            <a href="{{ route('admin.fakultas.index') }}" class="btn btn-secondary mt-2">Batal</a>
         </form>
     </div>
 </main>

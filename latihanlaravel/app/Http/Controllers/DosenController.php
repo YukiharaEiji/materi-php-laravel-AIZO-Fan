@@ -75,7 +75,7 @@ class DosenController extends Controller
             'gambar' => $gambarPath,
         ]);
 
-        return redirect()->route('dosen.index')->with('succses','Dosen berhasil di tambahkan.');
+       return redirect()->route('admin.dosen.index')->with('success', 'Dosen berhasil ditambahkan.');
     }
 
     /**
@@ -126,7 +126,7 @@ class DosenController extends Controller
             'gambar' => $dosen->gambar,
         ]);
 
-        return redirect()->route('dosen.index')->with('success', 'dosen berhasil diperbarui.');
+        return redirect()->route('admin.dosen.index')->with('success', 'Dosen berhasil diperbarui.');
     }
 
     /**
@@ -142,6 +142,7 @@ class DosenController extends Controller
 
         $dosen->delete();
 
-        return redirect()->route('fakultas.index')->with('success', 'Dosen berhasil dihapus.');
+        return redirect()->route('admin.dosen.index')->with('success', 'Dosen berhasil dihapus.');
+
     }
 }

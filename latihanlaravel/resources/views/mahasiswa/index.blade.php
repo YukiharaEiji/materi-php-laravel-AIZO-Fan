@@ -12,6 +12,10 @@
                 {{ session('success') }}
             </div>
         @endif
+
+                @if(Auth::user()->level === 'admin')
+            <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-success mb-3">Tambah Mahasiswa Baru</a>  
+        @endif
         
         <div class="row">
             @foreach ($mahasiswas as $mhs)
@@ -41,9 +45,7 @@
         </div>
 
         {{-- Tombol tambah hanya untuk admin --}}
-        @if(Auth::user()->level === 'admin')
-            <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-success mb-3">Tambah Mahasiswa Baru</a>  
-        @endif
+
     </div>
 </main>
 @endsection

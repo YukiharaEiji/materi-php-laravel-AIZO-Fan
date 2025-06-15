@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProdiController extends Controller
 {
@@ -58,6 +59,7 @@ class ProdiController extends Controller
 
         public function index()
     {
+        // Gate::authorize("view");
         $prodi = Prodi::all();
         return view('prodi.index', compact('prodi'));
     }
@@ -66,7 +68,10 @@ class ProdiController extends Controller
      */
     
     public function create(Request $request)
-    {
+    {   
+        // if(! Gate::allows("isuser")){
+        //     abort(403);
+        // }
         return view('prodi.create');
     }
 
@@ -105,7 +110,10 @@ class ProdiController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
+    {     
+        //   if(! Gate::allows("isuser")){
+        //     abort(403);
+        // }
           $prodi = Prodi::findOrFail($id);
         return view('prodi.edit', compact('prodi'));
     }
@@ -115,6 +123,9 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // if(! Gate::allows("isuser")){
+        //     abort(403);
+        // }
           $request->validate([
             'nama' => 'required|string|max:255',
             'kaprodi' => 'nullable|string|max:255',
@@ -132,6 +143,9 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
+        // if(! Gate::allows("isuser")){
+        //     abort(403);
+        // }
         $prodi = Prodi::findOrFail($id);
         $prodi->delete();
 

@@ -26,7 +26,7 @@
                 <h2 class="text-danger">{{ $fak->nama }}</h2>
                 <p>{{ $fak->deskripsi }}</p>
                 
-                {{-- Hanya tampilkan tombol Edit dan Hapus jika user admin --}}
+                
                 @if(Auth::user()->level === 'admin')
                     <a href="{{ route('admin.fakultas.edit', $fak->id) }}" class="btn btn-primary">Edit</a>
 
@@ -40,7 +40,6 @@
         </div>
         @endforeach
 
-        {{-- Tombol tambah fakultas hanya untuk admin --}}
         @if(Auth::user()->level === 'admin')
             <a href="{{ route('admin.fakultas.create') }}" class="btn btn-success mb-5">Tambah Fakultas</a>
         @endif

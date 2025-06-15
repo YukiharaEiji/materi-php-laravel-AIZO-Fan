@@ -34,7 +34,6 @@
           $level = strtolower(Auth::user()->level);
         @endphp
 
-        {{-- Admin Menu --}}
         @if($level === 'admin')
           <li class="nav-item">
             <a href="{{ route('admin.fakultas.index') }}" class="nav-link">
@@ -67,7 +66,6 @@
             </a>
           </li>
 
-        {{-- Dosen Menu --}}
         @elseif($level === 'dosen')
           <li class="nav-item">
             <a href="{{ route('dosen.materi.index') }}" class="nav-link">
@@ -82,7 +80,6 @@
             </a>
           </li>
 
-        {{-- Mahasiswa Menu --}}
         @elseif($level === 'mahasiswa')
           <li class="nav-item">
             <a href="{{ route('mhs.materi.index') }}" class="nav-link">
@@ -91,7 +88,6 @@
             </a>
           </li>
 
-        {{-- User Menu (kosong/tambahan opsional) --}}
         @elseif($level === 'user')
           <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link">

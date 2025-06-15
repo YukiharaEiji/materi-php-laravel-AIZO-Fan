@@ -13,7 +13,6 @@
             </div>
         @endif
 
-        {{-- Tombol tambah materi hanya untuk admin --}}
         @if(Auth::user()->level === 'admin')
             <a href="{{ route('admin.materi.create') }}" class="btn btn-success mb-3">Tambah Materi Baru</a>
         @endif
@@ -30,7 +29,6 @@
                             <p><strong>Dosen :</strong> {{ $mtr->dosen }}</p>
                             <p><strong>Tanggal :</strong> {{ $mtr->tanggal }}</p>
 
-                            {{-- Tombol edit & hapus hanya untuk admin --}}
                             @if(Auth::user()->level === 'admin')
                                 <a href="{{ route('admin.materi.edit', $mtr->id) }}" class="btn btn-info btn-sm">Edit</a>
 

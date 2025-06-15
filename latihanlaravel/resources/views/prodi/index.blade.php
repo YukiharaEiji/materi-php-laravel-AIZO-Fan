@@ -13,7 +13,6 @@
             </div>
         @endif
 
-        {{-- Tombol tambah hanya untuk admin --}}
         @if(Auth::user()->level === 'admin')
             <a href="{{ route('admin.prodi.create') }}" class="btn btn-success mb-3">Tambah Prodi Baru</a>
         @endif
@@ -30,7 +29,6 @@
                             <p><strong>Akreditasi :</strong> {{ $p->akreditasi }}</p>
                             <p><strong>Fakultas :</strong> {{ $p->fakultas }}</p>
 
-                            {{-- Tombol edit & hapus hanya untuk admin --}}
                             @if(Auth::user()->level === 'admin')
                                 <a href="{{ route('admin.prodi.edit', $p->id) }}" class="btn btn-info btn-sm">Edit</a>
                                 <form action="{{ route('admin.prodi.destroy', $p->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ingin Menghapus Prodi ?')">

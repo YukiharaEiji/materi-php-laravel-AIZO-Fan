@@ -28,7 +28,6 @@
                             <p><strong>NPM:</strong> {{ $mhs->npm }}</p>
                             <p><strong>Program Studi:</strong> {{ $mhs->prodi }}</p>
 
-                            {{-- Edit & Hapus hanya untuk admin --}}
                             @if(Auth::user()->level === 'admin')
                                 <a href="{{ route('admin.mahasiswa.edit', $mhs->id) }}" class="btn btn-info btn-sm">Edit</a>
 
@@ -44,7 +43,9 @@
             @endforeach
         </div>
 
-        {{-- Tombol tambah hanya untuk admin --}}
+        @if(Auth::user()->level === 'admin')
+            <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-success mb-3">Tambah Mahasiswa Baru</a>  
+        @endif
 
     </div>
 </main>
